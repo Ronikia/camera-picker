@@ -1,86 +1,84 @@
-'use strict';
+import { getCameras } from './api.js';
 
-// Список камер с фильтрами. Весь вывод — через textContent (без innerHTML),
-// поэтому данные из БД не могут внедрить HTML/JS.
+//Работа с DOM.
+//Формат данных и параметры API — docs/development.md.
+//Готовые стили: .card, .brand, .status, .status.error (css/app.css).
 
-const BODY_TYPES = { mirrorless: 'Беззеркальная', dslr: 'Зеркальная', compact: 'Компакт' };
-const VIDEO = { fhd: 'Full HD', '4k': '4K', '6k': '6K', '8k': '8K' };
+const filters = document.getElementById('filters');
+const status = document.getElementById('status');
+const cameras = document.getElementById('cameras');
 
-const form = document.getElementById('filters');
-const list = document.getElementById('cameras');
-const statusEl = document.getElementById('status');
+//Создание елемента
 
-let currentRequest = null;
-
-async function loadCameras() {
-    // Отменяем предыдущий запрос, если фильтр сменили быстрее, чем пришёл ответ
-    currentRequest?.abort();
-    currentRequest = new AbortController();
-
-    const params = new URLSearchParams();
-    for (const [key, value] of new FormData(form)) {
-        if (value !== '') params.set(key, value);
+const createEl = (teg, className = '', text = '') => {
+    const retTeg = document.createElement(teg);
+    if(className !== ''){
+        retTeg.classList.add(className);
     }
+    retTeg.textContent = text;
 
-    setStatus('Загрузка…');
-    try {
-        const response = await fetch(`/api/cameras?${params}`, { signal: currentRequest.signal });
-        const body = await response.json();
-        if (!response.ok) {
-            throw new Error(body.error?.message ?? `HTTP ${response.status}`);
-        }
-        render(body.data);
-        setStatus(`Найдено: ${body.meta.total}`);
-    } catch (error) {
-        if (error.name === 'AbortError') return;
-        list.replaceChildren();
-        setStatus(`Ошибка: ${error.message}`, true);
-    }
-}
+    return retTeg;
+};
 
-function render(cameras) {
-    list.replaceChildren(...cameras.map(renderCard));
-}
+//Рендер описания
 
-function renderCard(camera) {
-    const li = el('li', 'card');
-    li.append(
-        el('h2', null, camera.model),
-        el('p', 'brand', camera.brand.name),
-    );
-
-    const specs = [
-        ['Тип', BODY_TYPES[camera.body_type] ?? camera.body_type],
-        ['Байонет', camera.mount?.name ?? 'несъёмный объектив'],
-        ['Матрица', camera.sensor_format.name],
+const renderSpecs = (camera) => {
+    const dl = createEl('dl');
+    const rows = [
         ['Мегапиксели', camera.megapixels],
-        ['Стабилизация', camera.ibis === null ? null : (camera.ibis ? `да${camera.ibis_stops ? `, ${camera.ibis_stops} ст.` : ''}` : 'нет')],
-        ['Видео', camera.video_max_resolution ? `${VIDEO[camera.video_max_resolution]} ${camera.video_max_fps ?? ''}p`.trim() : null],
-        ['Вес', camera.weight_g ? `${camera.weight_g} г` : null],
-        ['Цена', camera.price_usd ? `$${camera.price_usd.toLocaleString('en-US')}` : null],
-        ['Год', camera.release_year],
+        ['Байонет', camera.mount?.name],
+        ['Матрица', camera.sensor_format.name],
+        ['Вес', camera.weight_g != null ? `${camera.weight_g} г` : null],
+        ['Цена', camera.price_usd != null ? `$${camera.price_usd}` : null],
+        ['Год', camera.release_year]
     ];
-
-    const dl = el('dl');
-    for (const [label, value] of specs) {
-        if (value === null || value === undefined) continue;
-        dl.append(el('dt', null, label), el('dd', null, String(value)));
+    for(const [key, value] of rows) {
+        if (value == null) {
+            continue;
+        }
+        const dt = createEl('dt','',key);
+        const dd = createEl('dd','',value);
+        dl.append(dt, dd);
     }
-    li.append(dl);
+
+    return dl;
+};
+
+//Рендер карточки
+
+const renderCard = (camera) => {
+    const li = createEl('li','card');
+    const h2 = createEl('h2','',camera.model);
+    const p = createEl('p','brand',camera.brand.name);
+    const dl = renderSpecs(camera);
+    li.append(h2, p, dl);
+
     return li;
-}
+};
 
-function el(tag, className = null, text = null) {
-    const node = document.createElement(tag);
-    if (className) node.className = className;
-    if (text !== null) node.textContent = text;
-    return node;
-}
+//Выгрузка камер
 
-function setStatus(text, isError = false) {
-    statusEl.textContent = text;
-    statusEl.classList.toggle('error', isError);
-}
+const loadCameras = async () => {
+    const params = Object.fromEntries(new FormData(filters));
+    status.classList.remove('error');
+    status.textContent = 'Загрузка, подождите';
+    let responseCameras;
+    try {
+        responseCameras = await getCameras(params);
+    } catch (error) {
+        status.textContent = error.message;
+        status.classList.add('error');
+        return;
+    }
+    cameras.replaceChildren();
+    for (const dataCamera of responseCameras.data) {
+        cameras.append(renderCard(dataCamera));
+    }
+    status.textContent = `Найдено: ${responseCameras.meta.total}`;
+};
 
-form.addEventListener('change', loadCameras);
+filters.addEventListener("change", () => {
+    loadCameras();
+});
+
 loadCameras();
