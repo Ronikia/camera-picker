@@ -1,0 +1,79 @@
+{
+    "$schema": "./catalog.schema.json",
+    "brands": [
+        {
+            "slug": "sony",
+            "name": "Sony",
+            "country": "Japan",
+            "website": "https://www.sony.com",
+            "source_url": "https://www.sony.com"
+        }
+    ],
+    "mounts": [
+        {
+            "slug": "sony-e",
+            "name": "Sony E",
+            "brand": "sony",
+            "flange_distance_mm": 18,
+            "system_type": "mirrorless",
+            "source_url": "https://en.wikipedia.org/wiki/Sony_E-mount"
+        }
+    ],
+    "cameras": [
+        {
+            "brand": "sony",
+            "slug": "a7-iv",
+            "model": "Alpha 7 IV",
+            "mount": "sony-e",
+            "body_type": "mirrorless",
+            "sensor_format": "full_frame",
+            "megapixels": 33,
+            "ibis": true,
+            "ibis_stops": 5.5,
+            "video_max_resolution": "4k",
+            "video_max_fps": 60,
+            "iso_max": 51200,
+            "burst_fps": 10,
+            "weather_sealed": true,
+            "weight_g": 658,
+            "price_usd": 2499,
+            "release_year": 2021,
+            "description": "Универсальная полнокадровая беззеркальная камера.",
+            "use_cases": {
+                "portrait": 5,
+                "landscape": 4,
+                "event": 5,
+                "video": 4,
+                "travel": 3
+            },
+            "source_url": "https://en.wikipedia.org/wiki/Sony_%CE%B17_IV"
+        }
+    ],
+    "lenses": [
+        {
+            "brand": "sony",
+            "mount": "sony-e",
+            "slug": "fe-85mm-f1-8",
+            "model": "FE 85mm F1.8",
+            "focal_min_mm": 85,
+            "focal_max_mm": 85,
+            "aperture_wide": 1.8,
+            "aperture_tele": 1.8,
+            "designed_for_format": "full_frame",
+            "autofocus": true,
+            "stabilization": false,
+            "weather_sealed": true,
+            "min_focus_m": 0.8,
+            "max_magnification": 0.13,
+            "filter_mm": 67,
+            "weight_g": 371,
+            "price_usd": 599,
+            "release_year": 2017,
+            "use_cases": {
+                "portrait": 5,
+                "event": 3
+            },
+            "source_url": null
+        }
+    ]
+}

@@ -1,0 +1,184 @@
+{
+    "$schema": "../../data/schema/catalog.schema.json",
+    "brands": [
+        { "slug": "canon",     "name": "Canon",     "country": "Japan", "website": "https://www.canon.com" },
+        { "slug": "nikon",     "name": "Nikon",     "country": "Japan", "website": "https://www.nikon.com" },
+        { "slug": "sony",      "name": "Sony",      "country": "Japan", "website": "https://www.sony.com" },
+        { "slug": "fujifilm",  "name": "Fujifilm",  "country": "Japan", "website": "https://www.fujifilm.com" },
+        { "slug": "panasonic", "name": "Panasonic", "country": "Japan", "website": "https://www.panasonic.com" },
+        { "slug": "sigma",     "name": "Sigma",     "country": "Japan", "website": "https://www.sigma-global.com" }
+    ],
+    "mounts": [
+        { "slug": "canon-rf",   "name": "Canon RF",   "brand": "canon",    "flange_distance_mm": 20,    "system_type": "mirrorless" },
+        { "slug": "canon-ef",   "name": "Canon EF",   "brand": "canon",    "flange_distance_mm": 44,    "system_type": "dslr" },
+        { "slug": "nikon-z",    "name": "Nikon Z",    "brand": "nikon",    "flange_distance_mm": 16,    "system_type": "mirrorless" },
+        { "slug": "nikon-f",    "name": "Nikon F",    "brand": "nikon",    "flange_distance_mm": 46.5,  "system_type": "dslr" },
+        { "slug": "sony-e",     "name": "Sony E",     "brand": "sony",     "flange_distance_mm": 18,    "system_type": "mirrorless" },
+        { "slug": "fujifilm-x", "name": "Fujifilm X", "brand": "fujifilm", "flange_distance_mm": 17.7,  "system_type": "mirrorless" },
+        { "slug": "l-mount",    "name": "L-Mount",    "brand": null,       "flange_distance_mm": 20,    "system_type": "mirrorless" }
+    ],
+    "cameras": [
+        {
+            "brand": "sony", "slug": "a7-iv", "model": "Alpha 7 IV", "mount": "sony-e",
+            "body_type": "mirrorless", "sensor_format": "full_frame", "megapixels": 33,
+            "ibis": true, "ibis_stops": 5.5, "video_max_resolution": "4k", "video_max_fps": 60,
+            "iso_max": 51200, "burst_fps": 10, "weather_sealed": true, "weight_g": 658,
+            "price_usd": 2499, "release_year": 2021,
+            "use_cases": { "portrait": 5, "landscape": 4, "event": 5, "video": 4, "travel": 3 }
+        },
+        {
+            "brand": "sony", "slug": "zv-e10", "model": "ZV-E10", "mount": "sony-e",
+            "body_type": "mirrorless", "sensor_format": "aps_c", "megapixels": 24.2,
+            "ibis": false, "ibis_stops": null, "video_max_resolution": "4k", "video_max_fps": 30,
+            "iso_max": 32000, "burst_fps": 11, "weather_sealed": false, "weight_g": 343,
+            "price_usd": 699, "release_year": 2021,
+            "use_cases": { "video": 4, "travel": 4, "street": 3 }
+        },
+        {
+            "brand": "sony", "slug": "rx100-vii", "model": "RX100 VII", "mount": null,
+            "body_type": "compact", "sensor_format": "one_inch", "megapixels": 20.1,
+            "ibis": false, "video_max_resolution": "4k", "video_max_fps": 30,
+            "iso_max": 12800, "burst_fps": 20, "weather_sealed": false, "weight_g": 302,
+            "price_usd": 1299, "release_year": 2019,
+            "use_cases": { "travel": 5, "street": 4 }
+        },
+        {
+            "brand": "canon", "slug": "eos-r6-mark-ii", "model": "EOS R6 Mark II", "mount": "canon-rf",
+            "body_type": "mirrorless", "sensor_format": "full_frame", "megapixels": 24.2,
+            "ibis": true, "ibis_stops": 8, "video_max_resolution": "4k", "video_max_fps": 60,
+            "iso_max": 102400, "burst_fps": 40, "weather_sealed": true, "weight_g": 670,
+            "price_usd": 2499, "release_year": 2022,
+            "use_cases": { "sport": 5, "wildlife": 4, "event": 5, "portrait": 4, "video": 4 }
+        },
+        {
+            "brand": "canon", "slug": "eos-90d", "model": "EOS 90D", "mount": "canon-ef",
+            "body_type": "dslr", "sensor_format": "aps_c_canon", "megapixels": 32.5,
+            "ibis": false, "video_max_resolution": "4k", "video_max_fps": 30,
+            "iso_max": 25600, "burst_fps": 10, "weather_sealed": true, "weight_g": 701,
+            "price_usd": 1199, "release_year": 2019,
+            "use_cases": { "wildlife": 4, "sport": 3, "landscape": 3 }
+        },
+        {
+            "brand": "nikon", "slug": "z6-iii", "model": "Z6 III", "mount": "nikon-z",
+            "body_type": "mirrorless", "sensor_format": "full_frame", "megapixels": 24.5,
+            "ibis": true, "ibis_stops": 8, "video_max_resolution": "6k", "video_max_fps": 60,
+            "iso_max": 64000, "burst_fps": 20, "weather_sealed": true, "weight_g": 760,
+            "price_usd": 2499, "release_year": 2024,
+            "use_cases": { "video": 5, "event": 5, "sport": 4, "portrait": 4 }
+        },
+        {
+            "brand": "nikon", "slug": "d850", "model": "D850", "mount": "nikon-f",
+            "body_type": "dslr", "sensor_format": "full_frame", "megapixels": 45.7,
+            "ibis": false, "video_max_resolution": "4k", "video_max_fps": 30,
+            "iso_max": 25600, "burst_fps": 7, "weather_sealed": true, "weight_g": 1005,
+            "price_usd": 3299, "release_year": 2017,
+            "use_cases": { "landscape": 5, "portrait": 5, "wildlife": 3 }
+        },
+        {
+            "brand": "fujifilm", "slug": "x-t5", "model": "X-T5", "mount": "fujifilm-x",
+            "body_type": "mirrorless", "sensor_format": "aps_c", "megapixels": 40.2,
+            "ibis": true, "ibis_stops": 7, "video_max_resolution": "6k", "video_max_fps": 30,
+            "iso_max": 12800, "burst_fps": 15, "weather_sealed": true, "weight_g": 557,
+            "price_usd": 1699, "release_year": 2022,
+            "use_cases": { "landscape": 5, "travel": 5, "street": 4, "portrait": 4 }
+        },
+        {
+            "brand": "panasonic", "slug": "lumix-s5-ii", "model": "Lumix S5 II", "mount": "l-mount",
+            "body_type": "mirrorless", "sensor_format": "full_frame", "megapixels": 24.2,
+            "ibis": true, "ibis_stops": 5, "video_max_resolution": "6k", "video_max_fps": 30,
+            "iso_max": 51200, "burst_fps": 9, "weather_sealed": true, "weight_g": 740,
+            "price_usd": 1999, "release_year": 2023,
+            "use_cases": { "video": 5, "event": 4, "astro": 3 }
+        }
+    ],
+    "lenses": [
+        {
+            "brand": "sony", "mount": "sony-e", "slug": "fe-85mm-f1-8", "model": "FE 85mm F1.8",
+            "focal_min_mm": 85, "focal_max_mm": 85, "aperture_wide": 1.8, "aperture_tele": 1.8,
+            "designed_for_format": "full_frame", "autofocus": true, "stabilization": false,
+            "weather_sealed": true, "min_focus_m": 0.8, "max_magnification": 0.13, "filter_mm": 67,
+            "weight_g": 371, "price_usd": 599, "release_year": 2017,
+            "use_cases": { "portrait": 5, "event": 3 }
+        },
+        {
+            "brand": "sony", "mount": "sony-e", "slug": "e-18-135mm-f3-5-5-6-oss", "model": "E 18-135mm F3.5-5.6 OSS",
+            "focal_min_mm": 18, "focal_max_mm": 135, "aperture_wide": 3.5, "aperture_tele": 5.6,
+            "designed_for_format": "aps_c", "autofocus": true, "stabilization": true,
+            "weather_sealed": null, "min_focus_m": 0.45, "max_magnification": 0.29, "filter_mm": 55,
+            "weight_g": 325, "price_usd": 599, "release_year": 2018,
+            "use_cases": { "travel": 5, "street": 3 }
+        },
+        {
+            "brand": "canon", "mount": "canon-rf", "slug": "rf-24-70mm-f2-8l-is-usm", "model": "RF 24-70mm F2.8L IS USM",
+            "focal_min_mm": 24, "focal_max_mm": 70, "aperture_wide": 2.8, "aperture_tele": 2.8,
+            "designed_for_format": "full_frame", "autofocus": true, "stabilization": true,
+            "weather_sealed": true, "min_focus_m": 0.21, "max_magnification": 0.3, "filter_mm": 82,
+            "weight_g": 900, "price_usd": 2399, "release_year": 2019,
+            "use_cases": { "event": 5, "street": 4, "portrait": 3, "landscape": 3, "video": 4 }
+        },
+        {
+            "brand": "canon", "mount": "canon-ef", "slug": "ef-50mm-f1-8-stm", "model": "EF 50mm f/1.8 STM",
+            "focal_min_mm": 50, "focal_max_mm": 50, "aperture_wide": 1.8, "aperture_tele": 1.8,
+            "designed_for_format": "full_frame", "autofocus": true, "stabilization": false,
+            "weather_sealed": false, "min_focus_m": 0.35, "max_magnification": 0.21, "filter_mm": 49,
+            "weight_g": 160, "price_usd": 125, "release_year": 2015,
+            "use_cases": { "portrait": 4, "street": 4 }
+        },
+        {
+            "brand": "nikon", "mount": "nikon-z", "slug": "z-24-120mm-f4-s", "model": "NIKKOR Z 24-120mm f/4 S",
+            "focal_min_mm": 24, "focal_max_mm": 120, "aperture_wide": 4, "aperture_tele": 4,
+            "designed_for_format": "full_frame", "autofocus": true, "stabilization": false,
+            "weather_sealed": true, "min_focus_m": 0.35, "max_magnification": 0.39, "filter_mm": 77,
+            "weight_g": 630, "price_usd": 1099, "release_year": 2021,
+            "use_cases": { "travel": 5, "landscape": 4, "event": 4 }
+        },
+        {
+            "brand": "nikon", "mount": "nikon-f", "slug": "af-s-70-200mm-f2-8e-fl-ed-vr", "model": "AF-S NIKKOR 70-200mm f/2.8E FL ED VR",
+            "focal_min_mm": 70, "focal_max_mm": 200, "aperture_wide": 2.8, "aperture_tele": 2.8,
+            "designed_for_format": "full_frame", "autofocus": true, "stabilization": true,
+            "weather_sealed": true, "min_focus_m": 1.1, "max_magnification": 0.21, "filter_mm": 77,
+            "weight_g": 1430, "price_usd": 2799, "release_year": 2016,
+            "use_cases": { "sport": 5, "portrait": 4, "event": 4, "wildlife": 3 }
+        },
+        {
+            "brand": "fujifilm", "mount": "fujifilm-x", "slug": "xf-16-55mm-f2-8-r-lm-wr", "model": "XF16-55mmF2.8 R LM WR",
+            "focal_min_mm": 16, "focal_max_mm": 55, "aperture_wide": 2.8, "aperture_tele": 2.8,
+            "designed_for_format": "aps_c", "autofocus": true, "stabilization": false,
+            "weather_sealed": true, "min_focus_m": 0.3, "max_magnification": 0.16, "filter_mm": 77,
+            "weight_g": 655, "price_usd": 1199, "release_year": 2015,
+            "use_cases": { "event": 4, "landscape": 4, "street": 3 }
+        },
+        {
+            "brand": "sigma", "mount": "sony-e", "slug": "105mm-f2-8-dg-dn-macro-art", "model": "105mm F2.8 DG DN Macro | Art",
+            "focal_min_mm": 105, "focal_max_mm": 105, "aperture_wide": 2.8, "aperture_tele": 2.8,
+            "designed_for_format": "full_frame", "autofocus": true, "stabilization": false,
+            "weather_sealed": true, "min_focus_m": 0.295, "max_magnification": 1, "filter_mm": 62,
+            "weight_g": 710, "price_usd": 799, "release_year": 2020,
+            "use_cases": { "macro": 5, "portrait": 3 }
+        },
+        {
+            "brand": "sigma", "mount": "l-mount", "slug": "105mm-f2-8-dg-dn-macro-art", "model": "105mm F2.8 DG DN Macro | Art",
+            "focal_min_mm": 105, "focal_max_mm": 105, "aperture_wide": 2.8, "aperture_tele": 2.8,
+            "designed_for_format": "full_frame", "autofocus": true, "stabilization": false,
+            "weather_sealed": true, "min_focus_m": 0.295, "max_magnification": 1, "filter_mm": 62,
+            "weight_g": 715, "price_usd": 799, "release_year": 2020,
+            "use_cases": { "macro": 5, "portrait": 3 }
+        },
+        {
+            "brand": "sigma", "mount": "sony-e", "slug": "14mm-f1-4-dg-dn-art", "model": "14mm F1.4 DG DN | Art",
+            "focal_min_mm": 14, "focal_max_mm": 14, "aperture_wide": 1.4, "aperture_tele": 1.4,
+            "designed_for_format": "full_frame", "autofocus": true, "stabilization": false,
+            "weather_sealed": true, "min_focus_m": 0.3, "max_magnification": null, "filter_mm": null,
+            "weight_g": 1170, "price_usd": 1599, "release_year": 2023,
+            "use_cases": { "astro": 5, "landscape": 4 }
+        },
+        {
+            "brand": "panasonic", "mount": "l-mount", "slug": "lumix-s-20-60mm-f3-5-5-6", "model": "LUMIX S 20-60mm F3.5-5.6",
+            "focal_min_mm": 20, "focal_max_mm": 60, "aperture_wide": 3.5, "aperture_tele": 5.6,
+            "designed_for_format": "full_frame", "autofocus": true, "stabilization": false,
+            "weather_sealed": true, "min_focus_m": 0.15, "max_magnification": 0.43, "filter_mm": 67,
+            "weight_g": 350, "price_usd": 599, "release_year": 2020,
+            "use_cases": { "travel": 5, "landscape": 4, "video": 3 }
+        }
+    ]
+}

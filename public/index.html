@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Каталог камер</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <script src="/js/app.js" defer></script>
+</head>
+<body>
+<header class="page-header">
+    <h1>Каталог камер</h1>
+</header>
+
+<main class="page">
+    <form id="filters" class="filters">
+        <label>
+            Тип
+            <select name="type">
+                <option value="">Любой</option>
+                <option value="mirrorless">Беззеркальная</option>
+                <option value="dslr">Зеркальная</option>
+                <option value="compact">Компакт</option>
+            </select>
+        </label>
+        <label>
+            Матрица
+            <select name="sensor">
+                <option value="">Любая</option>
+                <option value="medium_format">Средний формат</option>
+                <option value="full_frame">Полный кадр</option>
+                <option value="aps_c">APS-C</option>
+                <option value="aps_c_canon">APS-C (Canon)</option>
+                <option value="m43">Micro 4/3</option>
+                <option value="one_inch">1"</option>
+            </select>
+        </label>
+    </form>
+
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <ul id="cameras" class="cards"></ul>
+</main>
+</body>
+</html>

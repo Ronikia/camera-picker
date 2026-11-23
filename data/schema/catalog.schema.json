@@ -1,0 +1,119 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://camera-picker.local/schema/catalog.schema.json",
+    "title": "Camera catalog import file",
+    "description": "All sections are optional. References between entities use slugs. Unknown fields are rejected.",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "$schema": { "type": "string" },
+        "brands":  { "type": "array", "items": { "$ref": "#/$defs/brand" } },
+        "mounts":  { "type": "array", "items": { "$ref": "#/$defs/mount" } },
+        "cameras": { "type": "array", "items": { "$ref": "#/$defs/camera" } },
+        "lenses":  { "type": "array", "items": { "$ref": "#/$defs/lens" } }
+    },
+    "$defs": {
+        "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+            "maxLength": 128,
+            "description": "Lowercase latin letters, digits and single hyphens, e.g. \"sony-a7-iv\""
+        },
+        "url": { "type": "string", "pattern": "^https?://", "maxLength": 2048 },
+        "nullableUrl": { "anyOf": [{ "$ref": "#/$defs/url" }, { "type": "null" }] },
+        "sensorFormat": {
+            "enum": ["medium_format", "full_frame", "aps_c", "aps_c_canon", "m43", "one_inch"]
+        },
+        "useCases": {
+            "description": "Map of use_case slug -> suitability score 1..5",
+            "type": "object",
+            "propertyNames": { "$ref": "#/$defs/slug" },
+            "additionalProperties": { "type": "integer", "minimum": 1, "maximum": 5 }
+        },
+        "brand": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["slug", "name"],
+            "properties": {
+                "slug":       { "$ref": "#/$defs/slug" },
+                "name":       { "type": "string", "minLength": 1, "maxLength": 128 },
+                "country":    { "type": ["string", "null"], "maxLength": 64 },
+                "website":    { "$ref": "#/$defs/nullableUrl" },
+                "source_url": { "$ref": "#/$defs/nullableUrl" },
+                "verified":   { "type": "boolean" }
+            }
+        },
+        "mount": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["slug", "name", "system_type"],
+            "properties": {
+                "slug":               { "$ref": "#/$defs/slug" },
+                "name":               { "type": "string", "minLength": 1, "maxLength": 128 },
+                "brand":              { "anyOf": [{ "$ref": "#/$defs/slug" }, { "type": "null" }] },
+                "flange_distance_mm": { "type": ["number", "null"], "exclusiveMinimum": 0, "maximum": 100 },
+                "system_type":        { "enum": ["mirrorless", "dslr"] },
+                "source_url":         { "$ref": "#/$defs/nullableUrl" },
+                "verified":           { "type": "boolean" }
+            }
+        },
+        "camera": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["brand", "slug", "model", "body_type", "sensor_format"],
+            "properties": {
+                "brand":                { "$ref": "#/$defs/slug" },
+                "slug":                 { "$ref": "#/$defs/slug" },
+                "model":                { "type": "string", "minLength": 1, "maxLength": 128 },
+                "mount":                { "anyOf": [{ "$ref": "#/$defs/slug" }, { "type": "null" }] },
+                "body_type":            { "enum": ["mirrorless", "dslr", "compact"] },
+                "sensor_format":        { "$ref": "#/$defs/sensorFormat" },
+                "megapixels":           { "type": ["number", "null"], "exclusiveMinimum": 0, "maximum": 1000 },
+                "ibis":                 { "type": ["boolean", "null"] },
+                "ibis_stops":           { "type": ["number", "null"], "minimum": 0, "maximum": 10 },
+                "video_max_resolution": { "enum": ["fhd", "4k", "6k", "8k", null] },
+                "video_max_fps":        { "type": ["integer", "null"], "minimum": 1, "maximum": 1000 },
+                "iso_max":              { "type": ["integer", "null"], "minimum": 100, "maximum": 10000000 },
+                "burst_fps":            { "type": ["number", "null"], "exclusiveMinimum": 0, "maximum": 1000 },
+                "weather_sealed":       { "type": ["boolean", "null"] },
+                "weight_g":             { "type": ["integer", "null"], "minimum": 1, "maximum": 10000 },
+                "price_usd":            { "type": ["integer", "null"], "minimum": 1, "maximum": 1000000 },
+                "release_year":         { "type": ["integer", "null"], "minimum": 1990, "maximum": 2100 },
+                "description":          { "type": ["string", "null"], "maxLength": 5000 },
+                "use_cases":            { "$ref": "#/$defs/useCases" },
+                "source_url":           { "$ref": "#/$defs/nullableUrl" },
+                "verified":             { "type": "boolean" }
+            }
+        },
+        "lens": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["brand", "mount", "slug", "model", "focal_min_mm", "focal_max_mm",
+                         "aperture_wide", "aperture_tele", "designed_for_format"],
+            "properties": {
+                "brand":               { "$ref": "#/$defs/slug" },
+                "mount":               { "$ref": "#/$defs/slug" },
+                "slug":                { "$ref": "#/$defs/slug" },
+                "model":               { "type": "string", "minLength": 1, "maxLength": 160 },
+                "focal_min_mm":        { "type": "number", "exclusiveMinimum": 0, "maximum": 2000 },
+                "focal_max_mm":        { "type": "number", "exclusiveMinimum": 0, "maximum": 2000 },
+                "aperture_wide":       { "type": "number", "minimum": 0.7, "maximum": 64 },
+                "aperture_tele":       { "type": "number", "minimum": 0.7, "maximum": 64 },
+                "designed_for_format": { "$ref": "#/$defs/sensorFormat" },
+                "autofocus":           { "type": "boolean" },
+                "stabilization":       { "type": ["boolean", "null"] },
+                "weather_sealed":      { "type": ["boolean", "null"] },
+                "min_focus_m":         { "type": ["number", "null"], "exclusiveMinimum": 0, "maximum": 50 },
+                "max_magnification":   { "type": ["number", "null"], "exclusiveMinimum": 0, "maximum": 10 },
+                "filter_mm":           { "type": ["integer", "null"], "minimum": 10, "maximum": 200 },
+                "weight_g":            { "type": ["integer", "null"], "minimum": 1, "maximum": 20000 },
+                "price_usd":           { "type": ["integer", "null"], "minimum": 1, "maximum": 1000000 },
+                "release_year":        { "type": ["integer", "null"], "minimum": 1950, "maximum": 2100 },
+                "description":         { "type": ["string", "null"], "maxLength": 5000 },
+                "use_cases":           { "$ref": "#/$defs/useCases" },
+                "source_url":          { "$ref": "#/$defs/nullableUrl" },
+                "verified":            { "type": "boolean" }
+            }
+        }
+    }
+}
