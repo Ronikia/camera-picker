@@ -39,10 +39,13 @@ final class SchemaValidator
             return [];
         }
 
-        $formatted = (new ErrorFormatter())->format(
+        $formatter = new ErrorFormatter();
+        $formatted = $formatter->format(
             $result->error(),
             true,
-            null,
+            // formatErrorMessage подставляет {pattern}, {min} и т.п. в текст библиотеки
+            static fn (ValidationError $e, ?string $message = null): string
+                => self::describe($e, $formatter->formatErrorMessage($e, $message)),
             static fn (ValidationError $e): string => self::formatPath($e->data()->fullPath()),
         );
 
@@ -54,6 +57,39 @@ final class SchemaValidator
         }
 
         return $messages;
+    }
+
+    /**
+     * Сообщение с фактическим значением из файла — чтобы ошибку было видно без поиска по JSON.
+     *   enum:   "1080p" is not allowed, expected one of: "hd", "fhd", ...
+     *   прочие: <сообщение библиотеки> (got 40.5)
+     */
+    private static function describe(ValidationError $error, string $message): string
+    {
+        $value = $error->data()->value();
+
+        if ($error->keyword() === 'enum') {
+            $allowed = $error->schema()->info()->data()->enum ?? [];
+            return sprintf(
+                '%s is not allowed, expected one of: %s',
+                self::show($value),
+                implode(', ', array_map(self::show(...), $allowed)),
+            );
+        }
+
+        // Для объектов/массивов значение слишком длинное — сообщения библиотеки достаточно
+        if ($value === null || is_scalar($value)) {
+            return sprintf('%s (got %s)', $message, self::show($value));
+        }
+
+        return $message;
+    }
+
+    private static function show(mixed $value): string
+    {
+        $json = (string) json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        return mb_strlen($json) > 60 ? mb_substr($json, 0, 57) . '..."' : $json;
     }
 
     /**

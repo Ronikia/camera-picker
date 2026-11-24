@@ -7,6 +7,9 @@ import { getCameras } from './api.js';
 const filters = document.getElementById('filters');
 const status = document.getElementById('status');
 const cameras = document.getElementById('cameras');
+const nextCamersBtn = document.getElementById('nextCamersBtn');
+
+const PAGE_SIZE = 10;
 
 //Создание елемента
 
@@ -58,8 +61,10 @@ const renderCard = (camera) => {
 
 //Выгрузка камер
 
-const loadCameras = async () => {
+const loadCameras = async (append = false) => {
     const params = Object.fromEntries(new FormData(filters));
+    params.limit = PAGE_SIZE;
+    if (append === true) params.offset = cameras.children.length; 
     status.classList.remove('error');
     status.textContent = 'Загрузка, подождите';
     let responseCameras;
@@ -70,15 +75,26 @@ const loadCameras = async () => {
         status.classList.add('error');
         return;
     }
-    cameras.replaceChildren();
+    if (append !== true) cameras.replaceChildren();
     for (const dataCamera of responseCameras.data) {
         cameras.append(renderCard(dataCamera));
     }
-    status.textContent = `Найдено: ${responseCameras.meta.total}`;
+    status.textContent = `Показанно: ${cameras.children.length} из ${responseCameras.meta.total}`;
+
+    nextCamersBtn.hidden = (cameras.children.length >= responseCameras.meta.total);
 };
+
+//Обработчик смены фильтра
 
 filters.addEventListener("change", () => {
     loadCameras();
 });
 
+//Обработчик нажатии на кнопку nextCamersBtn для загрузки новых камер
+
+nextCamersBtn.addEventListener("click", () => {
+    loadCameras(true);
+});
+
 loadCameras();
+

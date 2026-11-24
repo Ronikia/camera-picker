@@ -54,8 +54,8 @@ PGPASSWORD=dev_password psql -h 127.0.0.1 -U camera_catalog camera_catalog   # �
 `camera_use_cases` / `lens_use_cases` (оценка пригодности `score` 1–5).
 
 - Естественные ключи: brand/mount/use_case — `slug`; camera — `(brand_id, slug)`; lens — `(brand_id, mount_id, slug)`.
-- У компакта `mount_id IS NULL` (CHECK). `system_type` байонета должен совпадать с `body_type` камеры (проверяет импорт).
-- Объектив: `focal_min_mm = focal_max_mm` у фикса; `aperture_wide/tele` — f-число на концах; `designed_for_format` — для совместимости/кропа.
+- `body_type`: mirrorless | dslr | rangefinder | compact. У компакта `mount_id IS NULL` (CHECK). `system_type` байонета должен совпадать с `body_type` камеры (проверяет импорт).
+- Объектив: `focal_min_mm = focal_max_mm` у фикса; `aperture_wide/tele` — f-число на концах; `designed_for_format` — для совместимости/кропа; `filter_mm` NUMERIC(4,1) (бывает 40.5).
 - У основных таблиц: `source_url`, `verified`, `created_at`, `updated_at` (триггер `set_updated_at`).
 - `price_usd` — цена на старте продаж, целое. Деньги и характеристики — `INTEGER`/`NUMERIC`, не float.
 

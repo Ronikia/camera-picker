@@ -10,7 +10,7 @@ use App\Repository\CameraRepository;
 
 final class CameraController
 {
-    private const BODY_TYPES = ['mirrorless', 'dslr', 'compact'];
+    private const BODY_TYPES = ['mirrorless', 'dslr', 'rangefinder', 'compact'];
     private const SENSOR_FORMATS = ['medium_format', 'full_frame', 'aps_c', 'aps_c_canon', 'm43', 'one_inch'];
     private const SLUG_PATTERN = '/^[a-z0-9]+(-[a-z0-9]+)*$/';
     private const MAX_LIMIT = 100;

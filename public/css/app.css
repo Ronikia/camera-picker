@@ -95,3 +95,42 @@ body {
 
 .card dt { color: var(--muted); }
 .card dd { margin: 0; }
+
+/* Кнопка «Показать ещё» под списком */
+.load-more {
+    display: block;
+    margin: -16px auto 40px;   /* у .cards снизу 40px — подтягиваем ближе к списку */
+    padding: 10px 28px;
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.load-more:hover {
+    color: var(--surface);
+    background: var(--accent);
+}
+
+.load-more:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.load-more:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
+
+.load-more:disabled:hover {
+    color: var(--accent);
+    background: var(--surface);
+}
+
+/* display: block выше перебивает стандартное скрытие — возвращаем его для атрибута hidden */
+.load-more[hidden] { display: none; }
